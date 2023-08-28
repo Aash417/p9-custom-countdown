@@ -111,6 +111,7 @@ li {
 	list-style-type: none;
 	padding: 10px;
 	text-transform: uppercase;
+	display: inline-block;
 }
 
 li span {
@@ -123,6 +124,27 @@ li span {
 .complete {
 	position: relative;
 	top: 60px;
+}
+.complete-title {
+	animation: complete1 4s infinite;
+}
+@keyframes complete1 {
+	0% {
+		color: rgb(255, 0, 0);
+	}
+	25% {
+		color: #efff13;
+	}
+	50% {
+		color: #008b13;
+		transform: scale(1.5);
+	}
+	75% {
+		color: #12f0f8;
+	}
+	100% {
+		color: #7700ff;
+	}
 }
 
 /* Media Query: Large Smartphone (Vertical) */
