@@ -23,6 +23,7 @@ let countdownTitle = '';
 let countdownDate = '';
 let countdownValue = Date;
 let countdownActive;
+let savedCountdown;
 
 // functions
 // populate countdown / complete ui
@@ -72,9 +73,17 @@ function updateCountdown(e) {
   countdownTitle = e.srcElement[0].value;
   countdownDate = e.srcElement[1].value;
 
+  savedcountdown = {
+    title: countdownTitle,
+    date: countdownDate,
+  };
+  console.log(savedcountdown);
+  localStorage.setItem('countdown', JSON.stringify(savedcountdown));
+
   //   number version of current date
   if (countdownDate === '') alert('enter a date');
   else {
+    // get the current date
     countdownValue = new Date(countdownDate).getTime();
 
     updateDOM();
@@ -91,6 +100,22 @@ function reset() {
   countdownTitle = '';
   countdownDate = '';
   countdownTitleEl.textContent = '';
+
+  //   remove data from localStorage
+  localStorage.removeItem('countdown');
+}
+
+function restorePrevCountdown() {
+  // Get countdown form local storage
+  if (localStorage.getItem('countdown')) {
+    inputContainer.hidden = true;
+    savedCountdown = JSON.parse(localStorage.getItem('countdown'));
+    countdownTitle = savedCountdown.title;
+    countdownDate = savedCountdown.date;
+
+    countdownValue = new Date(countdownDate).getTime();
+    updateDOM();
+  }
 }
 
 dateEl.setAttribute('min', today);
@@ -100,3 +125,6 @@ dateEl.setAttribute('min', today);
 inputContainer.addEventListener('submit', updateCountdown);
 countdownBtn.addEventListener('click', reset);
 completeBtn.addEventListener('click', reset);
+
+// On load check local storage
+restorePrevCountdown();
